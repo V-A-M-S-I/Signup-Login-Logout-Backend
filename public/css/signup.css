@@ -1,0 +1,52 @@
+.box1{
+    background-color:white;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 70px;
+    border-radius: 70px;
+    }
+    
+    
+    img{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 30px;
+    }
+    input{
+        margin-bottom: 30px;
+        border-radius: 1px solid;
+        font-size: medium;
+        font-weight: 500;
+        padding: 9px;
+        width:250px;
+        box-shadow: 7px 7px lightblue;
+        border-radius: 9px;
+        
+    }
+    
+    .sign1 input{
+        background-color: rgb(238, 94, 68);
+        font-size: medium;
+        font-weight: 700;
+        color: aliceblue;
+        cursor: pointer;
+    } 
+    .login1:hover{
+        background-color: rgb(64, 135, 241);
+    }
+    a{
+        text-decoration: none;
+        color: rgb(80, 56, 214);
+    }
+
+    .hav{
+        display: flex;
+        justify-content: center;
+        gap:7px
+    }

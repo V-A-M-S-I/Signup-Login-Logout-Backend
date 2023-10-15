@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+<body>
+    <% if (user) { %>
+        <p class="greeting">Hello, <%= user.username %></p>
+        <a href="/logout" class="logout-button">Logout</a>
+    <% } else { %>
+        <p class="greeting">Welcome to our website. Please log in to access your account.</p>
+    <% } %>
+</body>
+</html>
+</html>
