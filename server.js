@@ -8,10 +8,12 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json());
 //--------------------------------------Mongoose Connection-----------------------------------\\
+
 mongoose.connect("mongodb://127.0.0.1:27017/credentials",{
     useNewUrlParser:true,
+    useUnifiedTopology: true
    }).then(()=>{
     console.log("Connected to database");
 }).catch(err=>{
@@ -20,49 +22,63 @@ mongoose.connect("mongodb://127.0.0.1:27017/credentials",{
 
 //_____________________________________________-MONGOOSE SCHEMA-________________________________________________________________________//
 
-const userSchema = new mongoose.Schema({
-  name:
-  {
-      type:String,
-      required: true,
-      unique: true,
-      trim:true,
-      maxLenght:[20,"your name is up to 20 chars long."]
-  },
-  email:
-  {
-      type:String,
-      required: true,
-      trim:true
-  },
-  password:
-  {
-      type:String,
-      required:true,
-      trim:true
-  },
-})
-
-const credentials = mongoose.model("credentials",userSchema)
-
-//--------------------------------------ROUTES------------------------------------------------\\
-app.get('/',(req,res)=>{
-    res.render("login.ejs")
-})
-app.get('/signup',(req,res)=>{
-    res.render("signup.ejs")
-})
-app.get('/home', (req, res) => {
-    if (req) {
-      // If the user is logged in, pass the user data to the template
-      res.render('home', { user: req.user });
-    } else {
-      // If the user is not logged in, pass user as null
-      res.render('home', { user: null });
+const userSchema =mongoose.Schema({
+    name: {
+        type: String,
+        required: 'Please enter your name',
+        trim: true
+    },
+    email: {
+        type: String,
+        unique:true,
+        required: 'Please enter your email',
+        trim: true,
+        lowercase:true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    cnfpswd: {
+        type: String,
+        required: true
     }
+},
+{
+    timestamps:true  
 });
 
+const User=new mongoose.model('user', userSchema);
 
+//--------------------------------------ROUTES------------------------------------------------\\
+app.get('/login',(req,res)=>{
+    res.render('login.ejs')
+})
+app.get('/signup',(req,res)=>{
+    res.render('signup.ejs')
+})
+app.post('/signup',async(req,res)=>{
+
+    try{
+        const userSave=new User({
+            name : req.body.name,
+            email : req.body.email,
+            password : req.body.password,
+            cnfpswd : req.body.reEnterPassword
+    })
+        userSave.save()
+        res.redirect('/login')
+
+    }
+    catch(err){
+        console.log(err)
+    }
+
+})
+
+app.post('/Login',(req,res)=>{
+    
+})
 
 
 
